@@ -1,0 +1,37 @@
+Adaptable by GA:
+	- (odometry)
+	- exploreTime: needs upper and lower limit
+	- signalTime: needs upper and lower limit
+	- signalCloseRange: needs upper and lower limit
+
+Static:
+	- seed
+	- dropTime
+	- pickupTime
+	- totalNbRobots
+	- output
+	
+Environmental static:
+	- radius
+	- nestSize
+	- nbFoodPatches
+	- nbFoodItems
+	- renewalRate
+	- foodPatchSize
+	- patchType
+
+	
+Undecided:
+	- signalDistance: for the moment not sure how to adapt in code
+	- obstacleAvoidanceDistance & avoidanceFactor: can be done seperately
+	
+
+Considerations:
+	- Which environments to test? Should they be pseudo-random? Should we take some standard environments on which 
+	  to run the algorithm? Should we take a bunch of random environments for the calculation of each fitness and take the average?
+	- useOdometry for solitaries as well as recruitees?
+	- Start all robots on same place and in same direction?
+	- Average uniform distance and patch distance should be the same?
+	- Replacement of food should be the same?
+	- Does it make sense for exploreTime to be bigger than signalTime? Probably it does.
+	
