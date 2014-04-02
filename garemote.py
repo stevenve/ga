@@ -35,7 +35,7 @@ crossProb = float(sys.argv[5]) # 0.95
 
 # Actual parameters
 # Experiment
-random_seed = 11
+random_seed = 12
 #parameters
 #useOdometry = 'false'
 #exploreTime = 300
