@@ -1,0 +1,111 @@
+<argos-configuration>
+
+  <!-- ************************* -->
+  <!-- * General configuration * -->
+  <!-- ************************* -->
+  <framework>
+    <system threads="0"/>
+    <experiment length="5000" ticks_per_second="10" random_seed="11"/>
+  </framework>
+
+  <!-- *************** -->
+  <!-- * Controllers * -->
+  <!-- *************** -->
+  <controllers>
+
+    <footbot_combined_novis_controller id="ffc" library="~/argosbuild/problem/libbt_footbot_base.so">
+      <actuators>
+        <differential_steering implementation="default"/>
+        <leds implementation="default" medium="leds"/>
+	<range_and_bearing implementation="default"/>
+      </actuators>
+      <sensors>
+	<footbot_proximity implementation="default"/>
+        <footbot_light implementation="rot_z_only" show_rays="false"/>
+	<range_and_bearing implementation="medium" medium="rab" show_rays="false"/>
+	<footbot_motor_ground implementation="rot_z_only"/>
+	<differential_steering implementation="default"/>
+      </sensors>
+	<params>
+		<!-- signalCloseRange should be at least as big as obstacleAvoidanceDistance -->
+		<parameters useOdometry="false" exploreTime="300" signalTime="2000" dropTime="1" pickupTime="1" signalCloseRange="50" signalDistance="500000" obstacleAvoidanceDistance="50" avoidanceFactor="3"/>
+	</params>
+    </footbot_combined_novis_controller>
+
+</controllers>
+
+  <!-- *********************** -->
+  <!-- * Arena configuration * -->
+  <!-- *********************** -->
+
+
+ <arena size="10, 10, 3" center="0,0,1" positional_grid_size="1, 1, 1">
+
+<floor id="floor" source="loop_functions" pixels_per_meter="10"/>
+
+    <box id="wall_north" size="10,0.1,0.5" movable="false">
+      <body position="0,5,0" orientation="0,0,0"/>
+    </box>
+    <box id="wall_south" size="10,0.1,0.5" movable="false">
+      <body position="0,-5,0" orientation="0,0,0"/>
+    </box>
+    <box id="wall_east" size="0.1,10,0.5" movable="false">
+      <body position="5,0,0" orientation="0,0,0"/>
+    </box>
+    <box id="wall_west" size="0.1,10,0.5" movable="false">
+      <body position="-5,0,0" orientation="0,0,0"/>
+    </box>
+
+
+    <light id="light" position="0,0,1.0" orientation="0,0,0" color="yellow" intensity="3.0" medium="leds"/>
+
+    <distribute>
+      <position method="uniform" min="-1,-1,0" max="1,1,0"/>
+      <orientation method="uniform" min="0,0,0" max="360,0,0"/>
+      <!--<position method="uniform" min="0,-1,0" max="0,-1,0" />-->
+      <!--<orientation method="uniform" min="-90,0,0" max="-90,0,0" />-->
+      <entity quantity="12" max_trials="10000">
+        <foot-bot id="a">
+          <controller config="ffc"/>
+        </foot-bot>
+      </entity>
+    </distribute>
+
+  </arena>
+
+<!-- ****************** -->
+  <!-- * Loop functions * -->
+  <!-- ****************** -->
+  <loop_functions library="~/argosbuild/problem/loop_functions/combined_novis/libcombined_novis_loop_functions.so" label="combined_novis_loop_functions">
+    <foraging radius="0.1" nestSize="2" nbFoodPatches="2" nbFoodItems="50" renewalRate="1" foodPatchSize="3" type="patched" nbSolitary="1" nbRecruiter="5" nbRecruitee="6" output="ga.csv"/>
+  </loop_functions>
+
+  <!-- ******************* -->
+  <!-- * Physics engines * -->
+  <!-- ******************* -->
+  <physics_engines>
+    <dynamics2d id="dyn2d"/>
+  </physics_engines>
+
+  <!-- ********* -->
+  <!-- * Media * -->
+  <!-- ********* -->
+  <media>
+    <range_and_bearing id="rab" grid_size="4, 4, 1"/>
+    <led id="leds" grid_size="4, 4, 1"/>
+  </media>
+
+  <!-- ****************** -->
+  <!-- * Visualization * -->
+  <!-- ****************** -->
+  <!-- visualization>
+    <qt-opengl>
+      <camera>
+        <placement idx="0" position="0.300443,-0.0813248,2.3663" look_at="0.300855,-0.0613303,1.3665" lens_focal_length="7" />
+      </camera>
+      <user_functions library="build/problem/loop_functions/combined/libcombined_loop_functions.so"
+                      label="combined_qt_user_functions" />
+    </qt-opengl>
+  </visualization-->
+
+</argos-configuration>
