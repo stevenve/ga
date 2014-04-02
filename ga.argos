@@ -76,7 +76,7 @@
 <!-- ****************** -->
   <!-- * Loop functions * -->
   <!-- ****************** -->
-  <loop_functions library="~/argosbuild/problem/loop_functions/combined_novis/libcombined_novis_loop_functions.so" label="combined_novis_loop_functions">
+  <loop_functions library="../../argosbuild/problem/loop_functions/combined_novis/libcombined_novis_loop_functions.so" label="combined_novis_loop_functions">
     <foraging radius="0.1" nestSize="2" nbFoodPatches="2" nbFoodItems="50" renewalRate="1" foodPatchSize="3" type="patched" nbSolitary="1" nbRecruiter="5" nbRecruitee="6" output="ga.csv"/>
   </loop_functions>
 

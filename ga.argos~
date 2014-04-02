@@ -13,7 +13,7 @@
   <!-- *************** -->
   <controllers>
 
-    <footbot_combined_novis_controller id="ffc" library="~/argosbuild/problem/libbt_footbot_base.so">
+    <footbot_combined_novis_controller id="ffc" library="../../argosbuild/problem/libbt_footbot_base.so">
       <actuators>
         <differential_steering implementation="default"/>
         <leds implementation="default" medium="leds"/>
