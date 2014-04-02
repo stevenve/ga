@@ -153,7 +153,7 @@ def lookupFitness(chrom):
         return -1
     
 def executeExperiment():
-    os.chdir('/home/stevenve/ARGOS3')
+    os.chdir('~/')
     subprocess.call(['time','argos3','-c','argos3-projects/problem/xml/ga.argos'])
     os.chdir('~/gaworkspace/ga')
     
