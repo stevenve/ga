@@ -554,6 +554,12 @@ def increaseDiversity(chroms):
 
 #################################### ALGORITHM ####################################
 
+def getAverageFitness(chroms):
+    sum = [0]
+    for i in range(len(chroms)):
+        sum += [chroms[i][iFitness]]
+    return np.mean(sum)
+
 def run_ga():
     global fitnessDB
     # Initiliatize GA seed
@@ -576,6 +582,7 @@ def run_ga():
         # assign fitness to entire population and sort
         calculateFitness(chroms)
         chroms.sort(key=lambda c: c[iFitness], reverse=False)
+        print '<<<<<<<<<< Average fitness: ' + str(getAverageFitness(chroms)) + ' >>>>>>>>>>'
         # stop criteria
         #TODO
         # select breeders: fitness proportionate with scaling
