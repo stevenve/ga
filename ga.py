@@ -187,7 +187,7 @@ def executeExperiment():
     os.chdir('/home/stevenve/ARGOS3')
     bla = subprocess.Popen(['time','argos3','-c','argos3-projects/problem/xml/ga.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
     os.chdir('/home/stevenve/eclipseworkspace/GA-thesis')
-    print "Experiment finished after " + str(time.time()-start) + " seconds."
+    print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def getFitnessFromFile():
     with open(output, 'rb') as f:
