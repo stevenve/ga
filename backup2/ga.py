@@ -49,7 +49,7 @@ if gaSeed == -1:
     gaSeed = random.randint(1,100000)
 
 # Actual parameters
-nbFitnessValues = 4
+nbFitnessValues = 20
 # Experiment
 random_seed = envRandom.randint(1, 100000) # 11
 #parameters
@@ -72,7 +72,7 @@ nbFoodItems = 50
 renewalRate = 1
 foodPatchSize = 2
 patchType = 'patched'
-output = '/home/stevenve/ARGOS3/argos3-projects/problem/results/ga'+str(dbNumber)+'.csv'
+output = '/home/stevenve/ARGOS3/argos3-projects/problem/results/ga'+dbNumber+'.csv'
 
 nbParameters = 7
 
@@ -170,7 +170,7 @@ def setupXML(chrom):
     f.write(etree.tostring(root, pretty_print=True))
     f.close()
     
-    print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
+    print 'Setting up XML file with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
     
 def lookupFitness(chrom):
     tmp = deepcopy(chrom)
@@ -183,7 +183,7 @@ def lookupFitness(chrom):
     
 def executeExperiment():
     os.chdir('/home/stevenve/ARGOS3')
-    bla = subprocess.Popen(['time','argos3','-c','argos3-projects/problem/xml/ga.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+    subprocess.call(['time','argos3','-c','argos3-projects/problem/xml/ga.argos'])
     os.chdir('/home/stevenve/eclipseworkspace/GA-thesis')
     
 def getFitnessFromFile():
@@ -200,9 +200,9 @@ def calculateRealFitness(chroms): # DON'T RECALCULATE IF DONE BEFORE
             chr = chroms[i][0:iRobotDistr+1]
         else:
             chr = chroms[i]
-        # See if fitness has been calculated sufficiently before
-        fit = lookupFitness(chr)
-        while(fit == -1 or len(fit)<nbFitnessValues):
+        if(chroms[i][iFitness] == -1):
+            # See if fitness has been calculated sufficiently before
+            fit = lookupFitness(chr)
             if fit == -1:
                 print "Looking up fitness in DB, nothing found..."
                 setupXML(chroms[i])
@@ -229,38 +229,6 @@ def calculateRealFitness(chroms): # DON'T RECALCULATE IF DONE BEFORE
             else:
                 #print 'DB: chrom = ' + str(chroms[i][1]) + ', fitness = ' + str(fit)
                 chroms[i][iFitness] = np.mean(fit)
-            fit = lookupFitness(chr)
-        chroms[i][iFitness] = np.mean(fit)
-#         if(chroms[i][iFitness] == -1):
-#             # See if fitness has been calculated sufficiently before
-#             fit = lookupFitness(chr)
-#             if fit == -1:
-#                 print "Looking up fitness in DB, nothing found..."
-#                 setupXML(chroms[i])
-#                 executeExperiment()
-#                 fitness = getFitnessFromFile()
-#                 chroms[i][iFitness] = fitness
-#                 # Store fitness for later reference
-#                 tmp = deepcopy(chr)
-#                 tmp[iFitness] = -1
-#                 fitnessDB[str(tmp)] = [chroms[i][iFitness]]
-#                 dumpDB()
-#             elif len(fit) < nbFitnessValues: # add the fitness to fitness list
-#                 print "Looking up fitness in DB, found:" + str(fit) + " with mean " + str(np.mean(fit))
-#                 setupXML(chroms[i])
-#                 executeExperiment()
-#                 fitness = getFitnessFromFile()
-#                 chroms[i][iFitness] = fitness
-#                 # add the fitness to fitness list
-#                 tmp = deepcopy(chr)
-#                 tmp[iFitness] = -1
-#                 fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [chroms[i][iFitness]]
-#                 dumpDB()
-#                 chroms[i][iFitness] = np.mean(fitnessDB[str(tmp)])
-#             else:
-#                 #print 'DB: chrom = ' + str(chroms[i][1]) + ', fitness = ' + str(fit)
-#                 chroms[i][iFitness] = np.mean(fit)
-        
         print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
             
                 

@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 
 import pickle
-import numpy as np
 
 fitnessDB = {}
 try:
@@ -14,7 +13,7 @@ except (EOFError, IOError):
 max = 0 
 maxChrom = None
 for chrom in fitnessDB.keys():
-    if np.mean(fitnessDB[chrom]) > max:
-        max = np.mean(fitnessDB[chrom])
+    if fitnessDB[chrom] > max:
+        max = fitnessDB[chrom]
         maxChrom = chrom 
-print 'F = ' + str(max) + ", chrom = " + str(maxChrom[1:])
+print 'F = ' + str(max) + ", chrom = " + str(maxChrom)

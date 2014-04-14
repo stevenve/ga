@@ -1,8 +1,10 @@
 Adaptable by GA:
+	- robotDistr
 	- (odometry)
 	- exploreTime: needs upper and lower limit
 	- signalTime: needs upper and lower limit
 	- signalCloseRange: needs upper and lower limit
+	- signalHasPriority
 
 Static:
 	- seed
@@ -23,7 +25,7 @@ Environmental static:
 	
 Undecided:
 	- signalDistance: for the moment not sure how to adapt in code
-	- obstacleAvoidanceDistance & avoidanceFactor: can be done seperately
+	- obstacleAvoidanceDistance & avoidanceFactor: can be done separately
 	
 
 Considerations:

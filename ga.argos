@@ -28,7 +28,7 @@
       </sensors>
 	<params>
 		<!-- signalCloseRange should be at least as big as obstacleAvoidanceDistance -->
-		<parameters useOdometry="false" exploreTime="300" signalTime="2000" dropTime="1" pickupTime="1" signalCloseRange="50" signalDistance="500000" obstacleAvoidanceDistance="50" avoidanceFactor="3"/>
+		<parameters useOdometry="false" exploreTime="300" signalTime="2000" dropTime="1" pickupTime="1" signalCloseRange="50" signalDistance="500000" obstacleAvoidanceDistance="50" avoidanceFactor="3" signalHasPriority="false"/>
 	</params>
     </footbot_combined_novis_controller>
 

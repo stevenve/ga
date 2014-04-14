@@ -26,4 +26,4 @@ sortedz = sorted(fitnessDB.iteritems(), key=operator.itemgetter(1))
 for i in range(len(sortedz)):
     chrom = eval(sortedz[i][0])
     fitness = sortedz[i][1]
-    print 'F = ' + str(round(np.mean(fitness),1)) + ", chrom = " + str(chrom[1:]) + ", Fs = " + str(fitnessDB2[str(chrom)])
+    print 'F = ' + str(np.mean(fitness)) + ", chrom = " + str(chrom[1:]) + ", Fs = " + str(fitnessDB2[str(chrom)])
