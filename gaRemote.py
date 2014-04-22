@@ -269,6 +269,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     done = False
 
     while(not done):
+        print 'Adding experiments to experiment pool if necessary..'
         done = True
         pool = mp.Pool(processes=nbThreads)
         args = []
@@ -285,13 +286,14 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
                 else:
                     length = len(fit)
                 for j in range(nbFitnessValues - length):
-		    done = False
-                    print 'Adding experiment to experiment pool..'
+                    done = False
                     args.append([i,j,chr])
             else:
                 chroms[i][iFitness] = np.mean(fit)
                 print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
-        print 'Executing experiments...'
+        print 'Executing experiments if necessary...'
+        print args
+        quit()
         results = pool.map(doExperiment, args)
         pool.close()
         pool.join()
