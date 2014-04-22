@@ -298,6 +298,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     pool.close()
     pool.join()
     print results
+    print len(results)
     for x in range(len(results)):
         tmp = deepcopy(args[x][2])
         tmp[iFitness] = -1
@@ -306,10 +307,6 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
         else:
             fitnessDB[str(tmp)] = [results[x]]
     dumpDB()
-    for i in range(len(chroms)):
-        fit = lookupFitness(chr)
-        chroms[i][iFitness] = np.mean(fit)
-
    
 
                 
