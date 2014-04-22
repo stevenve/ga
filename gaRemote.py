@@ -312,10 +312,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
         else:
             chr = chroms[args[x][0]]
         chroms[args[x][0]][iFitness] = np.mean(lookupFitness(chr))
-        
     dumpDB()
-    print "******************* joooo"
-    calculateRealFitnessParallel(chroms)
    
 
                 
