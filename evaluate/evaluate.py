@@ -1,20 +1,7 @@
 #! /usr/bin/env python
 
-# usage: ga.py envSeed gaSeed nbChromosomes nbGenerations selectionRate mutationProb crossProb dbNumber
+# usage: evaluate.py nbRuns nbThreads
 
-# Implementation details:
-#    - if envSeed == -1, then random envSeed
-#    - Selection process should always select an even number of parents
-#    - Relative fitness scaling uses scaling factor: 2*max - min. This assures that as fitness spread becomes smaller, scaling becomes more important. (paper)
-
-# Notes:
-#    - Mutation for the robot numbers should just generate a new robot distribution. Mutating the first or second number, 
-#    would always automatically result in also mutating the third number when the total number of robots is fixed, which is unfair.
-#    Adding 1 randomly as a mutation would be a too little mutation. Mutating larger numbers results in a completely new gene anyway.
-#    Using an inversion mutation would also not make sense, because depending on the initial population, not all the search space can be searched.
-#    Mutation should keep 1 robot number the same and then mutate the other two in some way.
-
-# Use multiple fitnesses, use deviation to determine how many fitness before stopping to calculate fitness
 
 import random
 import sys
@@ -104,7 +91,7 @@ def setupXML(nb):
     foraging.set('nbRecruitee',str(8))
     foraging.set('output',output + str(nb) + '.csv')
     etree.tostring(root, pretty_print=True)
-    f = open(xml, 'w')
+    f = open(xml2, 'w')
     f.write(etree.tostring(root, pretty_print=True))
     f.close()
     
@@ -122,8 +109,9 @@ def doExperiment(nb):
     setupXML(nb)
     executeExperiment(nb)
     
-pool = multiprocessing.Pool(processes=nbThreads)
-pool.map(doExperiment, range(nbRuns))
+doExperiment(0)
+#pool = multiprocessing.Pool(processes=nbThreads)
+#pool.map(doExperiment, range(nbRuns))
 
 
 
