@@ -209,6 +209,7 @@ def setupXMLParallel(chrom, i, j):
     #entity = root.find('arena').find('distribute').find('entity')
     foraging = root.find('loop_functions').find('foraging')
     
+    envRandom = random.Random()
     experiment.set('random_seed',str(envRandom.randint(1, 100000)))
     experiment.set('length', str(5000))
     
@@ -299,9 +300,16 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     print results
     for x in range(len(results)):
         tmp = deepcopy(args[x][2])
-        fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [results[x]]
-        chroms[args[x][0]][iFitness] = np.mean(fitnessDB[str(tmp)])
+        tmp[iFitness] = -1
+        if str(tmp) in fitnessDB:
+            fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [results[x]]
+        else:
+            fitnessDB[str(tmp)] = [results[x]]
     dumpDB()
+    for i in range(len(chroms)):
+        fit = lookupFitness(chr)
+        chroms[i][iFitness] = np.mean(fit)
+
    
 
                 
