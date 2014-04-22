@@ -31,7 +31,7 @@ import numpy as np
 import time
 import multiprocessing as mp
 
-nbThreads = 2
+nbThreads = 1
 
 fitnessDB = {}
 envSeed = int(sys.argv[1])
@@ -252,21 +252,20 @@ def getFitnessFromFileParallel(i, j):
         return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
     
 def executeExperimentParallel(i, j):
-    try:
-        start = time.time()
-        os.chdir('/home/stevenve/argos/argos3/argos3-projects')
-        print "nja"
-        subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
-        print "oke"
-        os.chdir('/home/stevenve/gaworkspace/ga')
-        print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
-    except:
-        print "Unexpected error:", sys.exc_info()[0]
+    start = time.time()
+    os.chdir('/home/stevenve/argos/argos3/argos3-projects')
+    print "nja"
+    subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
+    print "oke"
+    os.chdir('/home/stevenve/gaworkspace/ga')
+    print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
     setupXMLParallel(args[2], args[0], args[1])
     executeExperimentParallel(args[0], args[1])
-    return getFitnessFromFileParallel(args[0], args[1])
+    fit = getFitnessFromFileParallel(args[0], args[1])
+    print "OKE DAN"
+    return fit
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     global fitnessDB
@@ -278,7 +277,6 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
         done = True
         pool = mp.Pool(processes=nbThreads)
         args = []
-        results = []
         for i in range(len(chroms)):
             if(chroms[i][iRobotDistr][0] == 12):
                 chr = chroms[i][0:iRobotDistr+1]
