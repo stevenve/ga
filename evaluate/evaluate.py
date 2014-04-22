@@ -109,9 +109,8 @@ def doExperiment(nb):
     setupXML(nb)
     executeExperiment(nb)
     
-doExperiment(0)
-#pool = multiprocessing.Pool(processes=nbThreads)
-#pool.map(doExperiment, range(nbRuns))
+pool = multiprocessing.Pool(processes=nbThreads)
+pool.map(doExperiment, range(nbRuns))
 
 
 
