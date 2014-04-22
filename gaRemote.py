@@ -259,9 +259,13 @@ def executeExperimentParallel(i, j):
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
+    print "************** een"
     setupXMLParallel(args[2], args[0], args[1])
+    print "************** twee"
     executeExperimentParallel(args[0], args[1])
+    print "************** drie"
     return getFitnessFromFileParallel(args[0], args[1])
+    print "************** vier"
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     global fitnessDB
@@ -292,8 +296,6 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
                 chroms[i][iFitness] = np.mean(fit)
                 print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
         print 'Executing experiments if necessary...'
-        print args
-        quit()
         results = pool.map(doExperiment, args)
         pool.close()
         pool.join()
