@@ -255,9 +255,7 @@ def getFitnessFromFileParallel(i, j):
 def executeExperimentParallel(i, j):
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
-    print "nja"
     subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
-    print "oke"
     os.chdir('/home/stevenve/gaworkspace/ga')
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
@@ -265,13 +263,11 @@ def doExperiment(args):
     setupXMLParallel(args[2], args[0], args[1])
     executeExperimentParallel(args[0], args[1])
     fit = getFitnessFromFileParallel(args[0], args[1])
-    print "*********** " + str(fit)
     return fit
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     global fitnessDB
     global pool
-    done = False
 
     print 'Adding experiments to experiment pool if necessary..'
     pool = mp.Pool(processes=nbThreads)
@@ -297,8 +293,6 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     results = pool.map(doExperiment, args)
     pool.close()
     pool.join()
-    print results
-    print len(results)
     for x in range(len(results)):
         tmp = deepcopy(args[x][2])
         tmp[iFitness] = -1
