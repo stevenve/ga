@@ -307,6 +307,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
         else:
             fitnessDB[str(tmp)] = [results[x]]
     dumpDB()
+    calculateRealFitnessParallel(chroms)
    
 
                 
