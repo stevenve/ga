@@ -296,6 +296,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     results = pool.map(doExperiment, args)
     pool.close()
     pool.join()
+    print results
     for x in range(len(results)):
         tmp = deepcopy(args[x][2])
         fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [results[x]]
