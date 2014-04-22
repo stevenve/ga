@@ -31,7 +31,7 @@ import numpy as np
 import time
 import multiprocessing as mp
 
-nbThreads = 1
+nbThreads = 2
 
 fitnessDB = {}
 envSeed = int(sys.argv[1])
@@ -256,7 +256,7 @@ def executeExperimentParallel(i, j):
         start = time.time()
         os.chdir('/home/stevenve/argos/argos3/argos3-projects')
         print "nja"
-        subprocess.call(['argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
+        subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
         print "oke"
         os.chdir('/home/stevenve/gaworkspace/ga')
         print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
