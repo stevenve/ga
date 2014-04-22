@@ -255,7 +255,8 @@ def executeExperimentParallel(i, j):
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
     print outputParallel + str(i) + '_' + str(j) + '.argos'
-    bla = subprocess.Popen(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+    print os.getcwd()
+    subprocess.Popen(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
     os.chdir('/home/stevenve/gaworkspace/ga')
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
