@@ -31,7 +31,7 @@ import numpy as np
 import time
 import multiprocessing as mp
 
-nbThreads = 20
+nbThreads = 5
 
 fitnessDB = {}
 envSeed = int(sys.argv[1])
@@ -56,7 +56,7 @@ nbFitnessValues = 4
 # Experiment
 random_seed = envRandom.randint(1, 100000) # 11
 #parameters
-useOdometry = 'false'
+useOdometry = 'true'
 #exploreTime = 300
 #signalTime = 2000
 dropTime = 1
@@ -75,7 +75,7 @@ nbFoodItems = 50
 renewalRate = 1
 foodPatchSize = 2
 patchType = 'patched'
-output = '/home/stevenve/ARGOS3/argos3-projects/problem/results/ga'+str(dbNumber)+'.csv'
+# output = '/home/stevenve/ARGOS3/argos3-projects/problem/results/ga'+str(dbNumber)+'.csv'
 outputParallel = '/home/stevenve/tmp2/ga'
 
 nbParameters = 7
@@ -133,48 +133,48 @@ def calculateFakeFitness(chroms):
             if(chroms[i][iRobotDistr][0] == 6 and chroms[i][iRobotDistr][1] == 6):
                 chroms[i][iFitness] = 5.0
                 
-def setupXML(chrom):
-    xml = '/home/stevenve/ARGOS3/argos3-projects/problem/xml/ga.argos'
-    tree = etree.parse(xml)
-    root = tree.getroot()
-    experiment = root.find('framework').find('experiment')
-    parameters = root.find('controllers').find('footbot_combined_novis_controller').find('params').find('parameters')
-    #entity = root.find('arena').find('distribute').find('entity')
-    foraging = root.find('loop_functions').find('foraging')
-    
-    experiment.set('random_seed',str(envRandom.randint(1, 100000)))
-    
-    parameters.set('useOdometry',str(chrom[iOdometry]))
-    parameters.set('exploreTime',str(chrom[iExploreTime]*100))
-    parameters.set('signalTime',str(chrom[iSignalTime]*1000))
-    parameters.set('signalHasPriority',str(chrom[iSignalHasPriority]))
-    parameters.set('signalCloseRange',str(chrom[iSignalCloseRange]*10))
-    parameters.set('dropTime',str(dropTime))
-    parameters.set('pickupTime',str(pickupTime))
-    parameters.set('signalDistance',str(signalDistance))
-    parameters.set('obstacleAvoidanceDistance',str(obstacleAvoidanceDistance))
-    parameters.set('avoidanceFactor',str(avoidanceFactor))
-    
-    #entity.set('quantity',str(totalNbRobots))
-    foraging.set('nbRobots',str(totalNbRobots))
-    
-    foraging.set('radius',str(radius))
-    foraging.set('nestSize',str(nestSize))
-    foraging.set('nbFoodPatches',str(nbFoodPatches))
-    foraging.set('nbFoodItems',str(nbFoodItems))
-    foraging.set('renewalRate',str(renewalRate))
-    foraging.set('foodPatchSize',str(foodPatchSize))
-    foraging.set('type',patchType)
-    foraging.set('nbSolitary',str(chrom[iRobotDistr][0]))
-    foraging.set('nbRecruiter',str(chrom[iRobotDistr][1]))
-    foraging.set('nbRecruitee',str(chrom[iRobotDistr][2]))
-    foraging.set('output',output)
-    etree.tostring(root, pretty_print=True)
-    f = open(xml, 'w')
-    f.write(etree.tostring(root, pretty_print=True))
-    f.close()
-    
-    print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
+# def setupXML(chrom):
+#     xml = '/home/stevenve/ARGOS3/argos3-projects/problem/xml/ga.argos'
+#     tree = etree.parse(xml)
+#     root = tree.getroot()
+#     experiment = root.find('framework').find('experiment')
+#     parameters = root.find('controllers').find('footbot_combined_novis_controller').find('params').find('parameters')
+#     #entity = root.find('arena').find('distribute').find('entity')
+#     foraging = root.find('loop_functions').find('foraging')
+#     
+#     experiment.set('random_seed',str(envRandom.randint(1, 100000)))
+#     
+#     parameters.set('useOdometry',str(chrom[iOdometry]))
+#     parameters.set('exploreTime',str(chrom[iExploreTime]*100))
+#     parameters.set('signalTime',str(chrom[iSignalTime]*1000))
+#     parameters.set('signalHasPriority',str(chrom[iSignalHasPriority]))
+#     parameters.set('signalCloseRange',str(chrom[iSignalCloseRange]*10))
+#     parameters.set('dropTime',str(dropTime))
+#     parameters.set('pickupTime',str(pickupTime))
+#     parameters.set('signalDistance',str(signalDistance))
+#     parameters.set('obstacleAvoidanceDistance',str(obstacleAvoidanceDistance))
+#     parameters.set('avoidanceFactor',str(avoidanceFactor))
+#     
+#     #entity.set('quantity',str(totalNbRobots))
+#     foraging.set('nbRobots',str(totalNbRobots))
+#     
+#     foraging.set('radius',str(radius))
+#     foraging.set('nestSize',str(nestSize))
+#     foraging.set('nbFoodPatches',str(nbFoodPatches))
+#     foraging.set('nbFoodItems',str(nbFoodItems))
+#     foraging.set('renewalRate',str(renewalRate))
+#     foraging.set('foodPatchSize',str(foodPatchSize))
+#     foraging.set('type',patchType)
+#     foraging.set('nbSolitary',str(chrom[iRobotDistr][0]))
+#     foraging.set('nbRecruiter',str(chrom[iRobotDistr][1]))
+#     foraging.set('nbRecruitee',str(chrom[iRobotDistr][2]))
+#     foraging.set('output',output)
+#     etree.tostring(root, pretty_print=True)
+#     f = open(xml, 'w')
+#     f.write(etree.tostring(root, pretty_print=True))
+#     f.close()
+#     
+#     print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
     
 def lookupFitness(chrom):
     tmp = deepcopy(chrom)
@@ -185,19 +185,19 @@ def lookupFitness(chrom):
     else:
         return -1
     
-def executeExperiment():
-    start = time.time()
-    os.chdir('/home/stevenve/ARGOS3')
-    bla = subprocess.Popen(['time','argos3','-c','argos3-projects/problem/xml/ga.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
-    os.chdir('/home/stevenve/eclipseworkspace/GA-thesis')
-    print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
-    
-def getFitnessFromFile():
-    with open(output, 'rb') as f:
-        content = f.readlines()
-        ll = content[len(content)-1]
-        tmp = ll.rstrip().split(',')
-        return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
+# def executeExperiment():
+#     start = time.time()
+#     os.chdir('/home/stevenve/ARGOS3')
+#     bla = subprocess.Popen(['time','argos3','-c','argos3-projects/problem/xml/ga.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+#     os.chdir('/home/stevenve/eclipseworkspace/GA-thesis')
+#     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
+#     
+# def getFitnessFromFile():
+#     with open(output, 'rb') as f:
+#         content = f.readlines()
+#         ll = content[len(content)-1]
+#         tmp = ll.rstrip().split(',')
+#         return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
 
 def setupXMLParallel(chrom, i, j):
     xml = '/home/stevenve/gaworkspace/ga/ga.argos'
@@ -262,7 +262,9 @@ def executeExperimentParallel(i, j):
 def doExperiment(args):
     setupXMLParallel(args[2], args[0], args[1])
     executeExperimentParallel(args[0], args[1])
+    print "jo"
     fit = getFitnessFromFileParallel(args[0], args[1])
+    print "jo2"
     return fit
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
@@ -310,49 +312,16 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
    
 
                 
-def calculateRealFitness(chroms): # DON'T RECALCULATE IF DONE BEFORE
-    global fitnessDB
-    for i in range(len(chroms)):
-        if(chroms[i][iRobotDistr][0] == 12):
-            chr = chroms[i][0:iRobotDistr+1]
-        else:
-            chr = chroms[i]
-        # See if fitness has been calculated sufficiently before
-        fit = lookupFitness(chr)
-        while(fit == -1 or len(fit)<nbFitnessValues):
-            if fit == -1:
-                print "Looking up fitness in DB, nothing found..."
-                setupXML(chroms[i])
-                executeExperiment()
-                fitness = getFitnessFromFile()
-                chroms[i][iFitness] = fitness
-                # Store fitness for later reference
-                tmp = deepcopy(chr)
-                tmp[iFitness] = -1
-                fitnessDB[str(tmp)] = [chroms[i][iFitness]]
-                dumpDB()
-            elif len(fit) < nbFitnessValues: # add the fitness to fitness list
-                print "Looking up fitness in DB, found:" + str(fit) + " with mean " + str(np.mean(fit))
-                setupXML(chroms[i])
-                executeExperiment()
-                fitness = getFitnessFromFile()
-                chroms[i][iFitness] = fitness
-                # add the fitness to fitness list
-                tmp = deepcopy(chr)
-                tmp[iFitness] = -1
-                fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [chroms[i][iFitness]]
-                dumpDB()
-                chroms[i][iFitness] = np.mean(fitnessDB[str(tmp)])
-            else:
-                #print 'DB: chrom = ' + str(chroms[i][1]) + ', fitness = ' + str(fit)
-                chroms[i][iFitness] = np.mean(fit)
-            fit = lookupFitness(chr)
-        chroms[i][iFitness] = np.mean(fit)
-        print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
-        
-#         if(chroms[i][iFitness] == -1):
-#             # See if fitness has been calculated sufficiently before
-#             fit = lookupFitness(chr)
+# def calculateRealFitness(chroms): # DON'T RECALCULATE IF DONE BEFORE
+#     global fitnessDB
+#     for i in range(len(chroms)):
+#         if(chroms[i][iRobotDistr][0] == 12):
+#             chr = chroms[i][0:iRobotDistr+1]
+#         else:
+#             chr = chroms[i]
+#         # See if fitness has been calculated sufficiently before
+#         fit = lookupFitness(chr)
+#         while(fit == -1 or len(fit)<nbFitnessValues):
 #             if fit == -1:
 #                 print "Looking up fitness in DB, nothing found..."
 #                 setupXML(chroms[i])
@@ -379,8 +348,41 @@ def calculateRealFitness(chroms): # DON'T RECALCULATE IF DONE BEFORE
 #             else:
 #                 #print 'DB: chrom = ' + str(chroms[i][1]) + ', fitness = ' + str(fit)
 #                 chroms[i][iFitness] = np.mean(fit)
-        
-#        print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
+#             fit = lookupFitness(chr)
+#         chroms[i][iFitness] = np.mean(fit)
+#         print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
+#         
+# #         if(chroms[i][iFitness] == -1):
+# #             # See if fitness has been calculated sufficiently before
+# #             fit = lookupFitness(chr)
+# #             if fit == -1:
+# #                 print "Looking up fitness in DB, nothing found..."
+# #                 setupXML(chroms[i])
+# #                 executeExperiment()
+# #                 fitness = getFitnessFromFile()
+# #                 chroms[i][iFitness] = fitness
+# #                 # Store fitness for later reference
+# #                 tmp = deepcopy(chr)
+# #                 tmp[iFitness] = -1
+# #                 fitnessDB[str(tmp)] = [chroms[i][iFitness]]
+# #                 dumpDB()
+# #             elif len(fit) < nbFitnessValues: # add the fitness to fitness list
+# #                 print "Looking up fitness in DB, found:" + str(fit) + " with mean " + str(np.mean(fit))
+# #                 setupXML(chroms[i])
+# #                 executeExperiment()
+# #                 fitness = getFitnessFromFile()
+# #                 chroms[i][iFitness] = fitness
+# #                 # add the fitness to fitness list
+# #                 tmp = deepcopy(chr)
+# #                 tmp[iFitness] = -1
+# #                 fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [chroms[i][iFitness]]
+# #                 dumpDB()
+# #                 chroms[i][iFitness] = np.mean(fitnessDB[str(tmp)])
+# #             else:
+# #                 #print 'DB: chrom = ' + str(chroms[i][1]) + ', fitness = ' + str(fit)
+# #                 chroms[i][iFitness] = np.mean(fit)
+#         
+# #        print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
             
                 
 def calculateFitness(chroms): 
@@ -581,13 +583,13 @@ def mutateSignalHasPriority(chrom):
         chrom[iSignalHasPriority] = 'false'
         
 def mutateExploreTime(chrom): 
-    chrom[iExploreTime] = random.randint(1, 20) # for now max = signalTimeMax #changed on remote
+    chrom[iExploreTime] = random.randint(0, 50) # for now max = signalTimeMax #changed on remote
     
 def mutateSignalTime(chrom):
-    chrom[iSignalTime] = random.randint(1, 20) #changed on remote
+    chrom[iSignalTime] = random.randint(1, 50) #changed on remote
 
 def mutateSignalCloseRange(chrom): # Usefulness depends on patch size, maybe set limit relative to patch size here?
-    chrom[iSignalCloseRange] = random.randint(1, 20) #changed on remote
+    chrom[iSignalCloseRange] = random.randint(0, 50) #changed on remote
     
 
 #################################### REINSERTION ####################################
@@ -617,9 +619,9 @@ def generateChromosome():
     #c[iSeed] = random_seed
     c[iRobotDistr] = generateRobotDist()
     c[iOdometry] = useOdometry
-    c[iExploreTime] = random.randint(1,20) # per 100 # 300 #changed on remote
+    c[iExploreTime] = random.randint(0,50) # per 100 # 300 #changed on remote
     c[iSignalTime] = random.randint(1,50) # per 1000 # 2000 #changed on remote
-    c[iSignalCloseRange] = random.randint(6, 15) # per 10 # 50 # should be bigger than obstacle avoidance distance #changed on remote
+    c[iSignalCloseRange] = random.randint(0, 20) # per 10 # 50 # should be bigger than obstacle avoidance distance #changed on remote
     c[iSignalHasPriority] = generateBool()
     return c 
 
