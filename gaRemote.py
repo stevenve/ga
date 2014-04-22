@@ -252,14 +252,16 @@ def getFitnessFromFileParallel(i, j):
         return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
     
 def executeExperimentParallel(i, j):
-    start = time.time()
-    os.chdir('/home/stevenve/argos/argos3/argos3-projects')
     try:
-        subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
+        start = time.time()
+        os.chdir('/home/stevenve/argos/argos3/argos3-projects')
+        print "nja"
+        subprocess.call(['argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
+        print "oke"
+        os.chdir('/home/stevenve/gaworkspace/ga')
+        print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     except:
         print "Unexpected error:", sys.exc_info()[0]
-    os.chdir('/home/stevenve/gaworkspace/ga')
-    print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
     setupXMLParallel(args[2], args[0], args[1])
