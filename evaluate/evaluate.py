@@ -54,7 +54,7 @@ output = '/home/stevenve/results/ga'
                 
 def setupXML(nb):
     xml = '/home/stevenve/gaworkspace/ga/ga.argos'
-    xml2 = '/home/stevenve/gaworkspace/ga/ga' + str(nb) + '.argos'
+    xml2 = '/home/stevenve/tmp/ga' + str(nb) + '.argos'
     tree = etree.parse(xml)
     root = tree.getroot()
     experiment = root.find('framework').find('experiment')
@@ -95,12 +95,12 @@ def setupXML(nb):
     f.write(etree.tostring(root, pretty_print=True))
     f.close()
     
-    print 'Executing experiment with nbSolitary=' + str(0) + ', nbRecruiter='+str(4)+', nbRecruitee='+str(8)
+    print 'Executing experiment '+ str(nb) +' with nbSolitary=' + str(0) + ', nbRecruiter='+str(4)+', nbRecruitee='+str(8)
     
 def executeExperiment(nb):
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
-    bla = subprocess.Popen(['time','argos3','-c','/home/stevenve/gaworkspace/ga/ga'+str(nb)+'.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+    bla = subprocess.Popen(['time','argos3','-c','/home/stevenve/tmp/ga'+str(nb)+'.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
     os.chdir('/home/stevenve/gaworkspace/ga')
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
