@@ -253,22 +253,15 @@ def getFitnessFromFileParallel(i, j):
     
 def executeExperimentParallel(i, j):
     start = time.time()
-    print "mja 1"
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
-    print "mja 2"
+    print outputParallel + str(i) + '_' + str(j) + '.argos'
     bla = subprocess.Popen(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
-    print "mja 3"
     os.chdir('/home/stevenve/gaworkspace/ga')
-    print "mja 4"
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
-    print args
-    print "************** een"
     setupXMLParallel(args[2], args[0], args[1])
-    print "************** twee"
     executeExperimentParallel(args[0], args[1])
-    print "************** drie"
     return getFitnessFromFileParallel(args[0], args[1])
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
