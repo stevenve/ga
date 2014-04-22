@@ -306,6 +306,13 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
             fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [results[x]]
         else:
             fitnessDB[str(tmp)] = [results[x]]
+            
+        if(chroms[args[x][0]][iRobotDistr][0] == 12):
+            chr = chroms[args[x][0]][0:iRobotDistr+1]
+        else:
+            chr = chroms[args[x][0]]
+        chroms[args[x][0]][iFitness] = np.mean(lookupFitness(chr))
+        
     dumpDB()
     print "******************* joooo"
     calculateRealFitnessParallel(chroms)
