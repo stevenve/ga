@@ -31,7 +31,7 @@ import numpy as np
 import time
 import multiprocessing as mp
 
-nbThreads = 1
+nbThreads = 20
 
 fitnessDB = {}
 envSeed = int(sys.argv[1])
