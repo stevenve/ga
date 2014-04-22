@@ -33,6 +33,7 @@ import multiprocessing
 
 
 nbRuns = int(sys.argv[1])
+nbThreads = int(sys.argv[2])
 
 envRandom = random.Random(random.randint(1,100000))
 
@@ -121,11 +122,8 @@ def doExperiment(nb):
     setupXML(nb)
     executeExperiment(nb)
     
-processes = []
-
-def run_ga():
-    pool = multiprocessing.Pool(processes=4)
-    pool.map(doExperiment, range(30))
+pool = multiprocessing.Pool(processes=nbThreads)
+pool.map(doExperiment, range(nbRuns))
 
 
 
