@@ -31,6 +31,7 @@ import numpy as np
 import time
 import multiprocessing as mp
 
+nbThreads = 1
 
 fitnessDB = {}
 envSeed = int(sys.argv[1])
@@ -269,7 +270,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
 
     while(not done):
         done = True
-        pool = mp.Pool(processes=20)
+        pool = mp.Pool(processes=nbThreads)
         args = []
         results = []
         for i in range(len(chroms)):
@@ -279,8 +280,12 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
                 chr = chroms[i]
             fit = lookupFitness(chr)
             if(fit == -1 or len(fit)<nbFitnessValues):
+		if fit == -1:
+		    length = 0
+		else:
+		    length = len(fit)
                 for j in range(nbFitnessValues - len(fit)):
-                    done = False
+		    done = False
                     print 'Adding experiment to experiment pool..'
                     args.append([i,j,chr])
             else:
