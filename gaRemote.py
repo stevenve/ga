@@ -272,37 +272,35 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     global pool
     done = False
 
-    while(not done):
-        print 'Adding experiments to experiment pool if necessary..'
-        done = True
-        pool = mp.Pool(processes=nbThreads)
-        args = []
-        for i in range(len(chroms)):
-            if(chroms[i][iRobotDistr][0] == 12):
-                chr = chroms[i][0:iRobotDistr+1]
+    print 'Adding experiments to experiment pool if necessary..'
+    pool = mp.Pool(processes=nbThreads)
+    args = []
+    for i in range(len(chroms)):
+        if(chroms[i][iRobotDistr][0] == 12):
+            chr = chroms[i][0:iRobotDistr+1]
+        else:
+            chr = chroms[i]
+        fit = lookupFitness(chr)
+        if(fit == -1 or len(fit)<nbFitnessValues):
+            if fit == -1:
+                length = 0
             else:
-                chr = chroms[i]
-            fit = lookupFitness(chr)
-            if(fit == -1 or len(fit)<nbFitnessValues):
-                if fit == -1:
-                    length = 0
-                else:
-                    length = len(fit)
-                for j in range(nbFitnessValues - length):
-                    done = False
-                    args.append([i,j,chr])
-            else:
-                chroms[i][iFitness] = np.mean(fit)
-                print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
-        print 'Executing experiments if necessary...'
-        results = pool.map(doExperiment, args)
-        pool.close()
-        pool.join()
-        for x in range(len(results)):
-            tmp = deepcopy(args[x][2])
-            tmp[iFitness] = -1
-            fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [results[x]]
-            dumpDB()
+                length = len(fit)
+            for j in range(nbFitnessValues - length):
+                done = False
+                args.append([i,j,chr])
+        else:
+            chroms[i][iFitness] = np.mean(fit)
+            print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
+    print 'Executing experiments if necessary...'
+    results = pool.map(doExperiment, args)
+    pool.close()
+    pool.join()
+    for x in range(len(results)):
+        tmp = deepcopy(args[x][2])
+        fitnessDB[str(tmp)] = fitnessDB[str(tmp)] + [results[x]]
+        chroms[args[x][0]][iFitness] = np.mean(fitnessDB[str(tmp)])
+    dumpDB()
    
 
                 
