@@ -280,11 +280,11 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
                 chr = chroms[i]
             fit = lookupFitness(chr)
             if(fit == -1 or len(fit)<nbFitnessValues):
-		if fit == -1:
-		    length = 0
-		else:
-		    length = len(fit)
-                for j in range(nbFitnessValues - len(fit)):
+                if fit == -1:
+                    length = 0
+                else:
+                    length = len(fit)
+                for j in range(nbFitnessValues - length):
 		    done = False
                     print 'Adding experiment to experiment pool..'
                     args.append([i,j,chr])
