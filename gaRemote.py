@@ -236,7 +236,7 @@ def setupXMLParallel(chrom, i, j):
     foraging.set('nbSolitary',str(chrom[iRobotDistr][0]))
     foraging.set('nbRecruiter',str(chrom[iRobotDistr][1]))
     foraging.set('nbRecruitee',str(chrom[iRobotDistr][2]))
-    foraging.set('output',output)
+    foraging.set('output',outputParallel + str(i) + '_' + str(j) + '.argos')
     etree.tostring(root, pretty_print=True)
     f = open(xml2, 'w')
     f.write(etree.tostring(root, pretty_print=True))
@@ -264,7 +264,7 @@ def doExperiment(args):
     setupXMLParallel(args[2], args[0], args[1])
     executeExperimentParallel(args[0], args[1])
     fit = getFitnessFromFileParallel(args[0], args[1])
-    print "OKE DAN"
+    print "*********** " + str(fit)
     return fit
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
