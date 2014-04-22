@@ -254,9 +254,10 @@ def getFitnessFromFileParallel(i, j):
 def executeExperimentParallel(i, j):
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
-    print outputParallel + str(i) + '_' + str(j) + '.argos'
-    print os.getcwd()
-    subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
+    try:
+        subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
     os.chdir('/home/stevenve/gaworkspace/ga')
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
