@@ -247,6 +247,7 @@ def setupXMLParallel(chrom, i, j):
 
 def getFitnessFromFileParallel(i, j):
     try:
+        print "get fitness: ", str(i), " ",str(j)
         with open('/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.csv', 'rb') as f:
             content = f.readlines()
             ll = content[len(content)-1]
@@ -254,9 +255,11 @@ def getFitnessFromFileParallel(i, j):
             return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
     except: 
         print "********* " , sys.exc_info()[0]," ", sys.exc_info()[1], " *************"
+        print "********* " , str(i), " ",str(j)," *************"
         
     
 def executeExperimentParallel(i, j):
+    print "execute parallel: ", str(i), " ",str(j)
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
     bla = subprocess.Popen(['time','argos3','-c','/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
