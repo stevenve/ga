@@ -268,11 +268,20 @@ def executeExperimentParallel(i, j):
     
 def doExperiment(args):
     print "een"
-    setupXMLParallel(args[2], args[0], args[1])
+    try:
+        setupXMLParallel(args[2], args[0], args[1])
+    except: 
+        print "********* error in setupxml: " , sys.exc_info()[1], " *************"
     print "twee"
-    executeExperimentParallel(args[0], args[1])
+    try:
+        executeExperimentParallel(args[0], args[1])
+    except: 
+        print "********* error in executeexperiment: " , sys.exc_info()[1], " *************"
     print "drie"
-    fit = getFitnessFromFileParallel(args[0], args[1])
+    try:
+        fit = getFitnessFromFileParallel(args[0], args[1])
+    except: 
+        print "********* error in getfitness: " , sys.exc_info()[1], " *************"
     print "vier"
     return fit
     
