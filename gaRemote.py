@@ -249,7 +249,6 @@ def setupXMLParallel(chrom, i, j):
         print "********* error in setupxml2: " , sys.exc_info()[1], " *************"
 def getFitnessFromFileParallel(i, j):
     try:
-        print "get fitness: ", str(i), " ",str(j)
         with open('/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.csv', 'rb') as f:
             content = f.readlines()
             ll = content[len(content)-1]
@@ -261,7 +260,6 @@ def getFitnessFromFileParallel(i, j):
         
     
 def executeExperimentParallel(i, j):
-    print "execute parallel: ", str(i), " ",str(j)
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
     bla = subprocess.Popen(['time','argos3','-c','/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
@@ -269,23 +267,19 @@ def executeExperimentParallel(i, j):
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
-    print "een"
     try:
         print args
         setupXMLParallel(args[3], args[0], args[1])
     except: 
         print "********* error in setupxml: " , sys.exc_info()[1], " *************"
-    print "twee"
     try:
         executeExperimentParallel(args[0], args[1])
     except: 
         print "********* error in executeexperiment: " , sys.exc_info()[1], " *************"
-    print "drie"
     try:
         fit = getFitnessFromFileParallel(args[0], args[1])
     except: 
         print "********* error in getfitness: " , sys.exc_info()[1], " *************"
-    print "vier"
     return fit
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
