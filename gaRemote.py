@@ -201,7 +201,7 @@ def lookupFitness(chrom):
 
 def setupXMLParallel(chrom, i, j):
     xml = '/home/stevenve/gaworkspace/ga/ga.argos'
-    xml2 = '/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.argos'
+    xml2 = '/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.argos'
     tree = etree.parse(xml)
     root = tree.getroot()
     experiment = root.find('framework').find('experiment')
@@ -247,7 +247,7 @@ def setupXMLParallel(chrom, i, j):
 
 def getFitnessFromFileParallel(i, j):
     try:
-        with open('/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.csv', 'rb') as f:
+        with open('/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.csv', 'rb') as f:
             content = f.readlines()
             ll = content[len(content)-1]
             tmp = ll.rstrip().split(',')
@@ -259,7 +259,7 @@ def getFitnessFromFileParallel(i, j):
 def executeExperimentParallel(i, j):
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
-    subprocess.call(['time','argos3','-c','/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.argos'])
+    bla = subprocess.Popen(['time','argos3','-c','/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.argos'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
     os.chdir('/home/stevenve/gaworkspace/ga')
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
