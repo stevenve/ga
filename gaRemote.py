@@ -268,7 +268,6 @@ def executeExperimentParallel(i, j):
     
 def doExperiment(args):
     try:
-        print args
         setupXMLParallel(args[3], args[0], args[1])
     except: 
         print "********* error in setupxml: " , sys.exc_info()[1], " *************"
