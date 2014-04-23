@@ -438,7 +438,10 @@ def selectProportionateWithRF(chroms): # paper
         j = 0
         while(rand > cumfit_normalized[j] ):
             j += 1
-        selChroms[i] = deepcopy(chroms[j])
+        if (i % 2 == 1 and chroms[j] != selChroms[i-1]):
+            selChroms[i] = deepcopy(chroms[j])
+        else:
+            i = i-1
     return selChroms
 
 #################################### RECOMBINATION ####################################
