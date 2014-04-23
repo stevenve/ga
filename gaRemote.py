@@ -260,7 +260,9 @@ def executeExperimentParallel(i, j):
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
+    print "kak"
     setupXMLParallel(args[2], args[0], args[1])
+    print "kak2"
     executeExperimentParallel(args[0], args[1])
     print "jo"
     fit = getFitnessFromFileParallel(args[0], args[1])
