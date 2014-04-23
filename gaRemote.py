@@ -712,10 +712,11 @@ def run_ga():
         chroms[i] = generateChromosome() # first number is fitness, -1 means no fitness calculated yet
 
     print chroms
-
+    start = time.time()
     # generation loop
     for gen in range(nbGenerations):
-        print '************ GENERATION ' + str(gen) + ' ************'
+        print '************ GENERATION ' + str(gen) + ', previous duration: ' +  str(round(time.time()-start,2)) + ' seconds ************'
+        start = time.time()
         # Replace bad chromosomes
         replaceBadChromosomes(chroms)
         # assign fitness to entire population and sort
