@@ -246,7 +246,7 @@ def setupXMLParallel(chrom, i, j):
     
         print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
     except: 
-        print "********* error in setupxml: " , sys.exc_info()[1], " *************"
+        print "********* error in setupxml2: " , sys.exc_info()[1], " *************"
 def getFitnessFromFileParallel(i, j):
     try:
         print "get fitness: ", str(i), " ",str(j)
@@ -271,6 +271,7 @@ def executeExperimentParallel(i, j):
 def doExperiment(args):
     print "een"
     try:
+        print args
         setupXMLParallel(args[2], args[0], args[1])
     except: 
         print "********* error in setupxml: " , sys.exc_info()[1], " *************"
