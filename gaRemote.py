@@ -264,13 +264,9 @@ def executeExperimentParallel(i, j):
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
-    print "kak"
     setupXMLParallel(args[2], args[0], args[1])
-    print "kak2"
     executeExperimentParallel(args[0], args[1])
-    print "jo"
-    fit = 12#getFitnessFromFileParallel(args[0], args[1])
-    print "jo2"
+    fit = getFitnessFromFileParallel(args[0], args[1])
     return fit
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
@@ -292,7 +288,6 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
             else:
                 length = len(fit)
             for j in range(nbFitnessValues - length):
-                done = False
                 args.append([i,j,chro])
         else:
             chroms[i][iFitness] = np.mean(fit)
