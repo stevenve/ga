@@ -433,15 +433,15 @@ def selectProportionateWithRF(chroms): # paper
         else:
             nbChromosomesToSelect += 1
     selChroms = [None]*nbChromosomesToSelect
-    for i in range(len(selChroms)):
+    i = 0
+    while i < len(selChroms):
         rand = random.random();
         j = 0
         while(rand > cumfit_normalized[j] ):
             j += 1
-        if (i % 2 == 1 and chroms[j] == selChroms[i-1]):
-            i = i-1
-        else:
+        if not (i % 2 == 1 and chroms[j] == selChroms[i-1]):
             selChroms[i] = deepcopy(chroms[j])
+            i = i+1
     return selChroms
 
 #################################### RECOMBINATION ####################################
