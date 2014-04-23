@@ -74,7 +74,7 @@ nbFoodPatches = 1
 nbFoodItems = 50
 renewalRate = 1
 foodPatchSize = 2
-patchType = 'uniform'
+patchType = 'patched'
 # output = '/home/stevenve/ARGOS3/argos3-projects/problem/results/ga'+str(dbNumber)+'.csv'
 #outputParallel = '/home/stevenve/tmp2/ga'
 
