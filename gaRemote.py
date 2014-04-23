@@ -76,7 +76,7 @@ renewalRate = 1
 foodPatchSize = 2
 patchType = 'patched'
 # output = '/home/stevenve/ARGOS3/argos3-projects/problem/results/ga'+str(dbNumber)+'.csv'
-outputParallel = '/home/stevenve/tmp2/ga'
+#outputParallel = '/home/stevenve/tmp2/ga'
 
 nbParameters = 7
 
@@ -237,7 +237,7 @@ def setupXMLParallel(chrom, i, j):
     foraging.set('nbSolitary',str(chrom[iRobotDistr][0]))
     foraging.set('nbRecruiter',str(chrom[iRobotDistr][1]))
     foraging.set('nbRecruitee',str(chrom[iRobotDistr][2]))
-    foraging.set('output',outputParallel + str(i) + '_' + str(j) + '.csv')
+    foraging.set('output','/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.csv')
     etree.tostring(root, pretty_print=True)
     f = open(xml2, 'w')
     f.write(etree.tostring(root, pretty_print=True))
@@ -246,11 +246,18 @@ def setupXMLParallel(chrom, i, j):
     print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
 
 def getFitnessFromFileParallel(i, j):
-    with open(outputParallel + str(i) + '_' + str(j) + '.csv', 'rb') as f:
-        content = f.readlines()
-        ll = content[len(content)-1]
-        tmp = ll.rstrip().split(',')
-        return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
+    try:
+        with open('/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.csv', 'rb') as f:
+            content = f.readlines()
+            ll = content[len(content)-1]
+            tmp = ll.rstrip().split(',')
+            return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
+    except:
+        print "**********************"
+        print "**********************"
+        print "**********************"
+        print "**********************"
+        print "**********************"
     
 def executeExperimentParallel(i, j):
     start = time.time()
