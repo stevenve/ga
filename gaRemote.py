@@ -264,9 +264,13 @@ def executeExperimentParallel(i, j):
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
 def doExperiment(args):
+    print "een"
     setupXMLParallel(args[2], args[0], args[1])
+    print "twee"
     executeExperimentParallel(args[0], args[1])
+    print "drie"
     fit = getFitnessFromFileParallel(args[0], args[1])
+    print "vier"
     return fit
     
 def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
