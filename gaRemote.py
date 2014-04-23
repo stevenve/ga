@@ -200,51 +200,53 @@ def lookupFitness(chrom):
 #         return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
 
 def setupXMLParallel(chrom, i, j):
-    xml = '/home/stevenve/gaworkspace/ga/ga.argos'
-    xml2 = '/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.argos'
-    tree = etree.parse(xml)
-    root = tree.getroot()
-    experiment = root.find('framework').find('experiment')
-    parameters = root.find('controllers').find('footbot_combined_novis_controller').find('params').find('parameters')
-    #entity = root.find('arena').find('distribute').find('entity')
-    foraging = root.find('loop_functions').find('foraging')
+    try:
+        xml = '/home/stevenve/gaworkspace/ga/ga.argos'
+        xml2 = '/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.argos'
+        tree = etree.parse(xml)
+        root = tree.getroot()
+        experiment = root.find('framework').find('experiment')
+        parameters = root.find('controllers').find('footbot_combined_novis_controller').find('params').find('parameters')
+        #entity = root.find('arena').find('distribute').find('entity')
+        foraging = root.find('loop_functions').find('foraging')
     
-    envRandom = random.Random()
-    experiment.set('random_seed',str(envRandom.randint(1, 100000)))
-    experiment.set('length', str(5000))
+        envRandom = random.Random()
+        experiment.set('random_seed',str(envRandom.randint(1, 100000)))
+        experiment.set('length', str(5000))
     
-    parameters.set('useOdometry',str(chrom[iOdometry]))
-    parameters.set('exploreTime',str(chrom[iExploreTime]*100))
-    parameters.set('signalTime',str(chrom[iSignalTime]*1000))
-    parameters.set('signalHasPriority',str(chrom[iSignalHasPriority]))
-    parameters.set('signalCloseRange',str(chrom[iSignalCloseRange]*10))
-    parameters.set('dropTime',str(dropTime))
-    parameters.set('pickupTime',str(pickupTime))
-    parameters.set('signalDistance',str(signalDistance))
-    parameters.set('obstacleAvoidanceDistance',str(obstacleAvoidanceDistance))
-    parameters.set('avoidanceFactor',str(avoidanceFactor))
+        parameters.set('useOdometry',str(chrom[iOdometry]))
+        parameters.set('exploreTime',str(chrom[iExploreTime]*100))
+        parameters.set('signalTime',str(chrom[iSignalTime]*1000))
+        parameters.set('signalHasPriority',str(chrom[iSignalHasPriority]))
+        parameters.set('signalCloseRange',str(chrom[iSignalCloseRange]*10))
+        parameters.set('dropTime',str(dropTime))
+        parameters.set('pickupTime',str(pickupTime))
+        parameters.set('signalDistance',str(signalDistance))
+        parameters.set('obstacleAvoidanceDistance',str(obstacleAvoidanceDistance))
+        parameters.set('avoidanceFactor',str(avoidanceFactor))
     
-    #entity.set('quantity',str(totalNbRobots))
-    foraging.set('nbRobots',str(totalNbRobots))
+        #entity.set('quantity',str(totalNbRobots))
+        foraging.set('nbRobots',str(totalNbRobots))
     
-    foraging.set('radius',str(radius))
-    foraging.set('nestSize',str(nestSize))
-    foraging.set('nbFoodPatches',str(nbFoodPatches))
-    foraging.set('nbFoodItems',str(nbFoodItems))
-    foraging.set('renewalRate',str(renewalRate))
-    foraging.set('foodPatchSize',str(foodPatchSize))
-    foraging.set('type',patchType)
-    foraging.set('nbSolitary',str(chrom[iRobotDistr][0]))
-    foraging.set('nbRecruiter',str(chrom[iRobotDistr][1]))
-    foraging.set('nbRecruitee',str(chrom[iRobotDistr][2]))
-    foraging.set('output','/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.csv')
-    etree.tostring(root, pretty_print=True)
-    f = open(xml2, 'w')
-    f.write(etree.tostring(root, pretty_print=True))
-    f.close()
+        foraging.set('radius',str(radius))
+        foraging.set('nestSize',str(nestSize))
+        foraging.set('nbFoodPatches',str(nbFoodPatches))
+        foraging.set('nbFoodItems',str(nbFoodItems))
+        foraging.set('renewalRate',str(renewalRate))
+        foraging.set('foodPatchSize',str(foodPatchSize))
+        foraging.set('type',patchType)
+        foraging.set('nbSolitary',str(chrom[iRobotDistr][0]))
+        foraging.set('nbRecruiter',str(chrom[iRobotDistr][1]))
+        foraging.set('nbRecruitee',str(chrom[iRobotDistr][2]))
+        foraging.set('output','/home/stevenve/tmp2/ga' + str(i) + '.' + str(j) + '.csv')
+        etree.tostring(root, pretty_print=True)
+        f = open(xml2, 'w')
+        f.write(etree.tostring(root, pretty_print=True))
+        f.close()
     
-    print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
-
+        print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
+    except: 
+        print "********* error in setupxml: " , sys.exc_info()[1], " *************"
 def getFitnessFromFileParallel(i, j):
     try:
         print "get fitness: ", str(i), " ",str(j)
