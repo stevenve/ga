@@ -31,7 +31,7 @@ import numpy as np
 import time
 import multiprocessing as mp
 
-nbThreads = 5
+nbThreads = 20
 
 fitnessDB = {}
 envSeed = int(sys.argv[1])
@@ -56,7 +56,7 @@ nbFitnessValues = 4
 # Experiment
 random_seed = envRandom.randint(1, 100000) # 11
 #parameters
-useOdometry = 'true'
+useOdometry = 'false'
 #exploreTime = 300
 #signalTime = 2000
 dropTime = 1
