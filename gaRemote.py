@@ -272,7 +272,7 @@ def doExperiment(args):
     print "een"
     try:
         print args
-        setupXMLParallel(args[2], args[0], args[1])
+        setupXMLParallel(args[3], args[0], args[1])
     except: 
         print "********* error in setupxml: " , sys.exc_info()[1], " *************"
     print "twee"
@@ -307,7 +307,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
             else:
                 length = len(fit)
             for j in range(nbFitnessValues - length):
-                args.append([i,j,chro])
+                args.append([i,j,chro,chroms[i]])
         else:
             chroms[i][iFitness] = np.mean(fit)
             print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
