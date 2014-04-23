@@ -253,7 +253,8 @@ def getFitnessFromFileParallel(i, j):
             tmp = ll.rstrip().split(',')
             return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
     except:
-        print "tried to read: " + str('/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.csv')
+        print "********* probleem *************"
+        
     
 def executeExperimentParallel(i, j):
     start = time.time()
@@ -266,9 +267,9 @@ def doExperiment(args):
     print "kak"
     setupXMLParallel(args[2], args[0], args[1])
     print "kak2"
-    #executeExperimentParallel(args[0], args[1])
+    executeExperimentParallel(args[0], args[1])
     print "jo"
-    fit = getFitnessFromFileParallel(args[0], args[1])
+    fit = 12#getFitnessFromFileParallel(args[0], args[1])
     print "jo2"
     return fit
     
