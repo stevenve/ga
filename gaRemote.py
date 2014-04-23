@@ -237,7 +237,7 @@ def setupXMLParallel(chrom, i, j):
     foraging.set('nbSolitary',str(chrom[iRobotDistr][0]))
     foraging.set('nbRecruiter',str(chrom[iRobotDistr][1]))
     foraging.set('nbRecruitee',str(chrom[iRobotDistr][2]))
-    foraging.set('output',outputParallel + str(i) + '_' + str(j) + '.argos')
+    foraging.set('output',outputParallel + str(i) + '_' + str(j) + '.csv')
     etree.tostring(root, pretty_print=True)
     f = open(xml2, 'w')
     f.write(etree.tostring(root, pretty_print=True))
@@ -246,7 +246,7 @@ def setupXMLParallel(chrom, i, j):
     print 'Executing experiment with nbSolitary=' + str(chrom[iRobotDistr][0]) + ', nbRecruiter='+str(chrom[iRobotDistr][1])+', nbRecruitee='+str(chrom[iRobotDistr][2])
 
 def getFitnessFromFileParallel(i, j):
-    with open(outputParallel + str(i) + '_' + str(j) + '.argos', 'rb') as f:
+    with open(outputParallel + str(i) + '_' + str(j) + '.csv', 'rb') as f:
         content = f.readlines()
         ll = content[len(content)-1]
         tmp = ll.rstrip().split(',')
@@ -255,7 +255,7 @@ def getFitnessFromFileParallel(i, j):
 def executeExperimentParallel(i, j):
     start = time.time()
     os.chdir('/home/stevenve/argos/argos3/argos3-projects')
-    subprocess.call(['time','argos3','-c',outputParallel + str(i) + '_' + str(j) + '.argos'])
+    subprocess.call(['time','argos3','-c','/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.argos'])
     os.chdir('/home/stevenve/gaworkspace/ga')
     print "Experiment finished after " + str(round(time.time()-start,2)) + " seconds."
     
