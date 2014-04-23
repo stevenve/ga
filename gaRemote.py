@@ -252,8 +252,8 @@ def getFitnessFromFileParallel(i, j):
             ll = content[len(content)-1]
             tmp = ll.rstrip().split(',')
             return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
-    except:
-        print "********* probleem *************"
+    except: 
+        print "********* " , sys.exc_info()[0]," *************"
         
     
 def executeExperimentParallel(i, j):
