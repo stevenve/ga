@@ -56,7 +56,7 @@ nbFitnessValues = 4
 # Experiment
 random_seed = envRandom.randint(1, 100000) # 11
 #parameters
-useOdometry = 'true'
+useOdometry = 'false'
 #exploreTime = 300
 #signalTime = 2000
 dropTime = 1
@@ -74,7 +74,7 @@ nbFoodPatches = 1
 nbFoodItems = 50
 renewalRate = 1
 foodPatchSize = 2
-patchType = 'patched'
+patchType = 'uniform'
 # output = '/home/stevenve/ARGOS3/argos3-projects/problem/results/ga'+str(dbNumber)+'.csv'
 #outputParallel = '/home/stevenve/tmp2/ga'
 
