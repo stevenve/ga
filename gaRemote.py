@@ -56,7 +56,7 @@ nbFitnessValues = 4
 # Experiment
 random_seed = envRandom.randint(1, 100000) # 11
 #parameters
-useOdometry = 'false'
+useOdometry = 'true'
 #exploreTime = 300
 #signalTime = 2000
 dropTime = 1
@@ -677,7 +677,7 @@ def increaseDiversity(chroms):
         counter = 0
         tmp = chroms[i]
         for j in range(len(chroms)):
-            if str(chroms[j][1:]) == str(chroms[i][1:]):
+            if str(chroms[j]) == str(chroms[i]): # should actually be indifferent of whether a fitness is assigned or not TODO
                 counter = counter + 1
         while counter > 2:
             chroms.remove(tmp)
