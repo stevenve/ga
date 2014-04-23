@@ -253,27 +253,7 @@ def getFitnessFromFileParallel(i, j):
             tmp = ll.rstrip().split(',')
             return int(tmp[1]) + int(tmp[2]) + int(tmp[3])
     except:
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
-        print "**********************"
+        print "tried to read: " + str('/home/stevenve/tmp2/ga' + str(i) + '_' + str(j) + '.csv')
     
 def executeExperimentParallel(i, j):
     start = time.time()
@@ -286,7 +266,7 @@ def doExperiment(args):
     print "kak"
     setupXMLParallel(args[2], args[0], args[1])
     print "kak2"
-    executeExperimentParallel(args[0], args[1])
+    #executeExperimentParallel(args[0], args[1])
     print "jo"
     fit = getFitnessFromFileParallel(args[0], args[1])
     print "jo2"
@@ -301,10 +281,10 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
     args = []
     for i in range(len(chroms)):
         if(chroms[i][iRobotDistr][0] == 12):
-            chr = chroms[i][0:iRobotDistr+1]
+            chro = chroms[i][0:iRobotDistr+1]
         else:
-            chr = chroms[i]
-        fit = lookupFitness(chr)
+            chro = chroms[i]
+        fit = lookupFitness(chro)
         if(fit == -1 or len(fit)<nbFitnessValues):
             if fit == -1:
                 length = 0
@@ -312,7 +292,7 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
                 length = len(fit)
             for j in range(nbFitnessValues - length):
                 done = False
-                args.append([i,j,chr])
+                args.append([i,j,chro])
         else:
             chroms[i][iFitness] = np.mean(fit)
             print 'Chrom = ' + str(chroms[i][1:]) + ', fitness = ' + str(chroms[i][iFitness])
@@ -329,10 +309,10 @@ def calculateRealFitnessParallel(chroms): # DON'T RECALCULATE IF DONE BEFORE
             fitnessDB[str(tmp)] = [results[x]]
             
         if(chroms[args[x][0]][iRobotDistr][0] == 12):
-            chr = chroms[args[x][0]][0:iRobotDistr+1]
+            chro = chroms[args[x][0]][0:iRobotDistr+1]
         else:
-            chr = chroms[args[x][0]]
-        chroms[args[x][0]][iFitness] = np.mean(lookupFitness(chr))
+            chro = chroms[args[x][0]]
+        chroms[args[x][0]][iFitness] = np.mean(lookupFitness(chro))
     dumpDB()
    
 
